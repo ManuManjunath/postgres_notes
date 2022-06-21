@@ -174,3 +174,20 @@ List all sequences in a DB
 ```
 SELECT c.relname FROM pg_class c WHERE c.relkind = 'S';
 ```
+
+Grants:
+```
+Grant usage,select on <sequences_name> to pgm_<DatabaseName>_ro
+Grant usage,select on <sequences_name> to pgm_<DatabaseName>_rw
+```
+
+Transactions
+```
+BEGIN:
+    UPDATE TABLE
+SAVEPOINT <name>; --> PG remembers this point in time.
+> Make some incorrect updates.
+ROLLBACK TO <name>; --> Rolls back to savepoint
+> Make the right updates.
+COMMIT;
+```

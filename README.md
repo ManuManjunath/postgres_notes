@@ -191,3 +191,21 @@ ROLLBACK TO <name>; --> Rolls back to savepoint
 > Make the right updates.
 COMMIT;
 ```
+
+Check existing grants on sequences -
+```
+SELECT relname, relacl
+FROM pg_class
+WHERE relkind = 'S'
+  AND relacl is not null
+  AND relnamespace IN (
+      SELECT oid
+      FROM pg_namespace
+      WHERE nspname NOT LIKE 'pg_%'
+        AND nspname != 'information_schema'
+);
+```
+
+To set default schema: ```set search_path = 'public';```
+
+
